@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" href="style.css">
+    
+    
+</head>
+<body>
+    <div id="wrapper">
+        <div id="menu">
+            <p class="welcome" id="user"></p>
+            <div style="clear:both"></div>
+        </div>
+
+        <div id="chatbox">
+            <ul id="messages">
+                
+            </ul>
+        </div>
+        
+        <input type="text" id="message" class="usermsg" size="63" placeholder="What's on your mind !" autocomplete="off">
+        <button type="submit" class="button" id="button">Send</button>
+        
+    </div>
+
+
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+        import  {getDatabase,set, ref, onChildAdded} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyCF71QW7kHSSc8KT-QqOC86hkcYU7QPYik",
+          authDomain: "gupshup-v1.firebaseapp.com",
+          projectId: "gupshup-v1",
+          storageBucket: "gupshup-v1.appspot.com",
+          databaseURL: "https://gupshup-v1-default-rtdb.firebaseio.com",
+          messagingSenderId: "806231601821",
+          appId: "1:806231601821:web:0b0946b19bce1e72545a74",
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        
+        
+        let message1=document.querySelector("#message");
+        let sendButton = document.querySelector("#button");
+        var myName = prompt("Enter your name");
+        document.querySelector("#user").innerHTML=`Welcome ${myName}`;
+        
+        const sendMessage = () =>{
+        let message =document.querySelector("#message").value;
+        set(ref(db, "People/"+myName), {
+            "sender": myName,
+            "message": message
+        })
+        .then(()=>{
+            alert("Message sent successfully!")
+        })
+        .catch((error)=>{
+            alert(error)
+        })
+        ;
+        
+        message1.value=""
+        return false;
+        };
+        
+        sendButton.addEventListener('click', sendMessage);
+        // Initialize Firebase
+        // listen for incoming messages
+        const db = getDatabase(app);
+
+        // Get a reference to the database service
+        const dataRef = ref(db, 'People/');
+        
+        // Fetch data from firebase
+        onChildAdded(dataRef, (snapshot) => {
+        // var data = snapshot.val();
+        // console.log(data);
+
+        // // Clear the list
+        // messages.innerHTML;
+
+        // // Add each item to the list
+        // for (var key in data) {
+        // if (data.hasOwnProperty(key)) {
+        //     var li = document.createElement('li');
+        //     li.textContent = data[key].sender + ': ' + data[key].message;
+        //     messages.appendChild(li);
+        //     }
+        // }
+
+
+        const data = snapshot.val();
+        // messages.innerHTML="";
+        
+        // Create a new list item for the new message
+        const li = document.createElement('li');
+        li.textContent = data.sender + ': ' + data.message;
+        messages.appendChild(li);
+        console.log(myName);
+        });
+    </script>
+
+</body>
+</html>
