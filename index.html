@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
     <div id="wrapper">
         <div id="menu">
             <p class="welcome" id="user"></p>
@@ -39,7 +40,7 @@
 
         let messageInput = document.querySelector("#message");
         let sendButton = document.querySelector("#button");
-        let userName = prompt("Enter your name") || "Anonymous";
+        let userName = prompt("Enter your name");
         document.querySelector("#user").textContent = `Welcome ${userName}`;
 
         const sendMessage = () => {
