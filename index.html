@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Gupshup</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -61,7 +61,7 @@
         // listen for incoming messages
         onChildAdded(ref(db, "Messages"), (snapshot) => {
             let messageData = snapshot.val();
-            let html = `<li>${messageData.sender}: ${messageData.message}</li>`;
+            let html = `<li>${messageData.sender} :  ${messageData.message}</li>`;
             document.querySelector("#messages").innerHTML += html;
         });
     </script>
